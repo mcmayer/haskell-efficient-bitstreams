@@ -1,3 +1,4 @@
 bin/
 .stack-work/
 *.in
+*.prof

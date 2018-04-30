@@ -1,7 +1,7 @@
 name:                bitstr
 version:             0.1.0.0
 -- synopsis:
--- description:
+description:         Files for stackexchange question
 homepage:            https://github.com/githubuser/bitstr#readme
 license:             BSD3
 license-file:        LICENSE
@@ -13,30 +13,44 @@ build-type:          Simple
 cabal-version:       >=1.10
 extra-source-files:  README.md
 
-executable bitstr
-  hs-source-dirs:      .
-  main-is:             Main.hs
-  default-language:    Haskell2010
-  build-depends:       base >= 4.7 && < 5
-                     , streaming
-                     , streaming-bytestring
-                     , bytestring
-                     , resourcet
-                     , mtl
-                     , word8
-  ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fllvm -optlc-mcpu=native 
-  --ghc-options: -O2 -fforce-recomp -optlc-mcpu=native 
+executable length
+    hs-source-dirs:      .
+    main-is:             Length.hs
+    default-language:    Haskell2010
+    build-depends:       base >= 4.7 && < 5
+                      , streaming
+                      , streaming-bytestring
+                      , bytestring
+                      , resourcet
+                      , mtl
+                      , word8
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -optlc-mcpu=native 
 
 executable sum-bytes
-  hs-source-dirs:      .
-  main-is:             SumBytes.hs
-  default-language:    Haskell2010
-  build-depends:       base >= 4.7 && < 5
-                     , streaming
-                     , streaming-bytestring
-                     , bytestring
-                     , resourcet
-                     , mtl
-                     , word8
-  ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fllvm -optlc-mcpu=native 
-  --ghc-options: -O2 -fforce-recomp -optlc-mcpu=native 
+    hs-source-dirs:      .
+    main-is:             SumBytes.hs
+    default-language:    Haskell2010
+    build-depends:       base >= 4.7 && < 5
+                      , streaming
+                      , streaming-bytestring
+                      , bytestring
+                      , resourcet
+                      , mtl
+                      , word8
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native
+    ghc-prof-options: -fprof-auto
+
+executable longest-seq
+    hs-source-dirs:      .
+    main-is:             LongestSeq.hs
+    default-language:    Haskell2010
+    build-depends:       base >= 4.7 && < 5
+                      , streaming
+                      , streaming-bytestring
+                      , bytestring
+                      , resourcet
+                      , mtl
+                      , word8
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields
+    ghc-prof-options: -fprof-auto
+

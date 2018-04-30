@@ -1,1 +1,2 @@
-# bitstr
+# Efficient Bitstreams in Haskell
+

@@ -1,20 +1,36 @@
-all: hask bin/read-c bin/sum-bytes-c
+all: bin/longest-seq-c bin/sum-bytes-c bin/length-c install
 
-hask:
+install:
 	stack install --local-bin-path bin
+
+bin/%-c: %.c
+	gcc -O3 -funroll-loops $< -o $@
+
+time: all
+	time head -c 10000000 </dev/urandom | bin/longest-seq-c; \
+	time head -c 10000000 </dev/urandom | bin/longest-seq; \
+
+time-sum: all
+	time head -c 100000000 </dev/urandom | bin/sum-bytes-c; \
+	time head -c 100000000 </dev/urandom | bin/sum-bytes \
+
+time-length: all
+	time head -c 100000000 </dev/urandom | bin/length-c; \
+	time head -c 100000000 </dev/urandom | bin/length \
+
+profile: build-profile
+	head -c 1000000 </dev/urandom | stack exec -- longest-seq +RTS -p; \
+	head -c 1000000 </dev/urandom | stack exec -- sum-bytes +RTS -p; \
+	head -c 1000000 </dev/urandom | stack exec -- length +RTS -p
+
+build-profile:
+	stack build --profile   
 
 code:
 	stack build hoogle intero stylish-haskell hlint
 
-bin/%-c: %.c
-	llvm-gcc -O3 -funroll-loops $< -o $@
+clean:
+	rm -f bin/*
+	*.prof
 
-time: all
-	time head -c 20000000 </dev/urandom | bin/read-c; \
-	time head -c 20000000 </dev/urandom | bin/bitstr; \
-
-time-sum: all
-	time head -c 20000000 </dev/urandom | bin/sum-bytes-c; \
-	time head -c 20000000 </dev/urandom | bin/sum-bytes \
-
-.PHONY: hask code time time-sum
+.PHONY: hask code time time-sum build-profile profile clean
