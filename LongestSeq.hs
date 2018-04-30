@@ -4,7 +4,6 @@ import           Data.Bits            (shiftR, (.&.))
 import qualified Data.ByteString.Lazy as BSL
 import           Data.List            (group)
 import           Data.Word8           (Word8)
-import           System.IO            (IOMode (..), withFile)
 
 splitByte :: Word8 -> [Bool]
 splitByte w = Prelude.map (\i-> (w `shiftR` i) .&. 1 == 1) [0..7]
