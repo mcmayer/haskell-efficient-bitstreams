@@ -25,6 +25,6 @@ main() {
         }
     }
     free(buf);
-    printf("%d\n", (int)max_seq_len);
+    printf("%d\n", (int)(max_seq_len+1));
     return 0;
 }
