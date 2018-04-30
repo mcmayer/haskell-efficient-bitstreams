@@ -1,8 +1,8 @@
 # Efficient Bitstreams in Haskell
 
-See the corresponding [SO question](https://github.com/mcmayer/haskell-efficient-bitstreams).
+See the corresponding [SO question](https://stackoverflow.com/questions/50101329/efficient-bitstreams-in-haskell).
 
-
+The `Makefile` has all the various targets to run the experiments and the profiling. The default `make` will just build everything (create a `bin/` directory first!) and then `make time` will do the timing on the `longest-seq` executables. The C executables get a `-c` appended to distinguish them.
 
 ## `length`
 
