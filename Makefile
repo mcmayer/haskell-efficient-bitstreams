@@ -9,10 +9,12 @@ bin/%-c: %.c
 time: all
 	time head -c 10000000 </dev/urandom | bin/longest-seq-c; \
 	time head -c 10000000 </dev/urandom | bin/longest-seq; \
+	time head -c 10000000 </dev/urandom | bin/longest-seq-stream; \
 
 time-sum: all
 	time head -c 100000000 </dev/urandom | bin/sum-bytes-c; \
-	time head -c 100000000 </dev/urandom | bin/sum-bytes \
+	time head -c 100000000 </dev/urandom | bin/sum-bytes; \
+	time head -c 100000000 </dev/urandom | bin/sum-bytes-stream \
 
 time-length: all
 	time head -c 100000000 </dev/urandom | bin/length-c; \
@@ -20,14 +22,17 @@ time-length: all
 
 profile: build-profile
 	head -c 1000000 </dev/urandom | stack exec -- longest-seq +RTS -p; \
+	head -c 5000 </dev/urandom | stack exec -- longest-seq-stream +RTS -p; \
 	head -c 1000000 </dev/urandom | stack exec -- sum-bytes +RTS -p; \
+	head -c 1000000 </dev/urandom | stack exec -- sum-bytes-stream +RTS -p; \
 	head -c 1000000 </dev/urandom | stack exec -- length +RTS -p
 
 build-profile:
 	stack build --profile   
 
 code:
-	stack build hoogle intero stylish-haskell hlint
+	stack build hoogle intero stylish-haskell hlint; \
+	zsh -c -i "code ."
 
 clean:
 	rm -f bin/*
