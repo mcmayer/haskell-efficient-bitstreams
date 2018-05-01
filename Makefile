@@ -9,7 +9,7 @@ bin/%-c: %.c
 time: all
 	time head -c 10000000 </dev/urandom | bin/longest-seq-c; \
 	time head -c 10000000 </dev/urandom | bin/longest-seq; \
-	time head -c 10000000 </dev/urandom | bin/longest-seq-stream; \
+	time head -c 2000 </dev/urandom | bin/longest-seq-stream # only 2000!; \
 
 time-sum: all
 	time head -c 100000000 </dev/urandom | bin/sum-bytes-c; \

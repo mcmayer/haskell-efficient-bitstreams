@@ -19,5 +19,5 @@ main = do
     let bs = BSS.unpack BSS.getContents :: Stream (Of Word8) IO ()
         gs = S.group $ bitStream bs ::  Stream (Stream (Of Bool) IO) IO ()
     maxlen <- S.maximum $ S.mapped S.length gs
-    print $ S.lazily maxlen
+    print $ S.fst' maxlen
 
