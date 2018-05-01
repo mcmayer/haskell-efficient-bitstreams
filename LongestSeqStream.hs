@@ -5,8 +5,22 @@ import           Data.Bits                 (shiftR, (.&.))
 import qualified Data.ByteString.Streaming as BSS
 import           Data.Word8                (Word8)
 import qualified Streaming                 as S
-import           Streaming.Prelude         (Of, Stream)
+import qualified Streaming.Internal        as S
+import           Streaming.Prelude         (Of (..), Stream)
 import qualified Streaming.Prelude         as S
+
+{-
+concat' :: (Foldable f, Monad m) => S.Stream (S.Of (f a)) m r ->  S.Stream (S.Of a) m r
+concat' = loop
+  where
+    loop str = case str of
+        S.Return r -> S.Return r
+        S.Effect m -> S.Effect (fmap loop m)
+        S.Step (lst :> as) ->
+          let inner []       = loop as
+              inner (x:rest) = S.Step (x :> inner rest)
+          in inner (S.toList lst)
+-}
 
 splitByte :: Word8 -> [Bool]
 splitByte w = (\i-> (w `shiftR` i) .&. 1 == 1) <$> [0..7]

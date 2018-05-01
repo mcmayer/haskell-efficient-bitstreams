@@ -1,0 +1,3 @@
+[submodule "streaming"]
+	path = streaming
+	url = https://github.com/haskell-streaming/streaming.git
