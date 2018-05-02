@@ -1,10 +1,12 @@
 all: bin/longest-seq-c bin/sum-bytes-c bin/length-c install
 
+CC=clang-3.9
+
 install:
 	stack install --local-bin-path bin
 
 bin/%-c: %.c
-	gcc -O3 -funroll-loops $< -o $@
+	$(CC) -O3 -funroll-loops $< -o $@
 
 time: all
 	time head -c 10000000 </dev/urandom | bin/longest-seq-c; \
@@ -35,7 +37,6 @@ code:
 	zsh -c -i "code ."
 
 clean:
-	rm -f bin/*
-	*.prof
+	rm -f bin/* *.prof
 
 .PHONY: hask code time time-sum build-profile profile clean

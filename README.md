@@ -24,8 +24,9 @@ On Mac OS do this:
 
 ```bash
 brew install llvm@3.9
-ln -s  /usr/local/opt/llvm@3.9/bin/opt  /usr/local/bin/opt-3.9
-ln -s  /usr/local/opt/llvm@3.9/bin/llc  /usr/local/bin/llc-3.9
+ln -s  /usr/local/opt/llvm@3.9/bin/opt  /usr/local/bin/opt-3.9		# needed by GHC
+ln -s  /usr/local/opt/llvm@3.9/bin/llc  /usr/local/bin/llc-3.9		# needed by GHC
+ln -s  /usr/local/opt/llvm@3.9/bin/clang  /usr/local/bin/clang-3.9	# for compiling C
 ```
 
 and point ghc to `opt` and `llc` by adding the flags  `-pgmlo opt-3.9 -pgmlc llc-3.9` to `ghc-options` of the cabal file.
