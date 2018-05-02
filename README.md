@@ -14,7 +14,11 @@ Stream bytes and add them up. Source files `sum-bytes.c` and `SumBytes.hs`.
 
 ## `longest-seq`
 
-Stream bytes and find the longest sequence of identical bits. Source files `longest-seq.c` and `LongestSeq.hs`.
+Stream bytes and find the longest sequence of identical bits. 
+
+- Naive implementation using `bytestring`. Source files `longest-seq.c` and `LongestSeq.hs`.
+- Implementation using `streaming `. Source file is `LongestSeqStream.hs`.
+- [Cirdec's](https://stackoverflow.com/users/414413/cirdec) solution using stream fusion.
 
 ## llvm
 

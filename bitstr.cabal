@@ -66,3 +66,16 @@ executable longest-seq-stream
                        , mtl
     ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
+
+executable longest-seq-fuse
+    hs-source-dirs:      .
+    main-is:             LongestSeqFuse.hs
+    default-language:    Haskell2010
+    build-depends:       base >= 4.7 && < 5
+                       , bytestring
+                       , word8
+                       , streaming
+                       , streaming-bytestring
+                       , mtl
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
+    ghc-prof-options: -fprof-auto
