@@ -7,7 +7,7 @@ license:             BSD3
 license-file:        LICENSE
 author:              Author name here
 maintainer:          example@example.com
-copyright:           2018 Author name here
+copyright:           2018 mcmayer
 category:            Web
 build-type:          Simple
 cabal-version:       >=1.10
@@ -20,7 +20,7 @@ executable length
     build-depends:       base >= 4.7 && < 5
                       , bytestring
                       , word8
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -optlc-mcpu=native 
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
 
 executable sum-bytes
     hs-source-dirs:      .
@@ -29,7 +29,7 @@ executable sum-bytes
     build-depends:       base >= 4.7 && < 5
                       , bytestring
                       , word8
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
 
 executable sum-bytes-stream
@@ -41,7 +41,7 @@ executable sum-bytes-stream
                        , word8
                        , streaming
                        , streaming-bytestring
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
 
 executable longest-seq
@@ -51,7 +51,7 @@ executable longest-seq
     build-depends:       base >= 4.7 && < 5
                        , bytestring
                        , word8
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
 
 executable longest-seq-stream
@@ -64,5 +64,5 @@ executable longest-seq-stream
                        , streaming
                        , streaming-bytestring
                        , mtl
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto

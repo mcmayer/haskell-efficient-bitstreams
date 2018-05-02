@@ -15,3 +15,17 @@ Stream bytes and add them up. Source files `sum-bytes.c` and `SumBytes.hs`.
 ## `longest-seq`
 
 Stream bytes and find the longest sequence of identical bits. Source files `longest-seq.c` and `LongestSeq.hs`.
+
+## llvm
+
+GHC 8 needs llvm 3.9. 
+
+On Mac OS do this:
+
+```bash
+brew install llvm@3.9
+ln -s  /usr/local/opt/llvm@3.9/bin/opt  /usr/local/bin/opt-3.9
+ln -s  /usr/local/opt/llvm@3.9/bin/llc  /usr/local/bin/llc-3.9
+```
+
+and point ghc to `opt` and `llc` by adding the flags  `-pgmlo opt-3.9 -pgmlc llc-3.9` to `ghc-options` of the cabal file.
