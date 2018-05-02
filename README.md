@@ -18,9 +18,9 @@ Stream bytes and find the longest sequence of identical bits. Source files `long
 
 ## llvm
 
-GHC 8 needs llvm 3.9. 
+GHC 8 needs llvm 3.9 if the llvm backend is to be enabled (`-fllvm`).
 
-On Mac OS do this:
+On Mac OS do this to install llvm-3.9:
 
 ```bash
 brew install llvm@3.9
@@ -29,4 +29,4 @@ ln -s  /usr/local/opt/llvm@3.9/bin/llc  /usr/local/bin/llc-3.9		# needed by GHC
 ln -s  /usr/local/opt/llvm@3.9/bin/clang  /usr/local/bin/clang-3.9	# for compiling C
 ```
 
-and point ghc to `opt` and `llc` by adding the flags  `-pgmlo opt-3.9 -pgmlc llc-3.9` to `ghc-options` of the cabal file.
+and point ghc to `opt-3.9` and `llc-3.9` by adding the flags  `-pgmlo opt-3.9 -pgmlc llc-3.9` to `ghc-options` of the cabal file.
