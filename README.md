@@ -4,6 +4,19 @@ See the corresponding [SO question](https://stackoverflow.com/questions/50101329
 
 The `Makefile` has all the various targets to run the experiments and the profiling. The default `make` will just build everything (create a `bin/` directory first!) and then `make time` will do the timing on the `longest-seq` executables. The C executables get a `-c` appended to distinguish them.
 
+## Setup and run
+
+```haskell
+mkdir bin	# for C and Haskell executables
+git clone git@github.com:haskell-streaming/streaming.git	# get the newest streaming 
+```
+
+### Makefile targets
+
+- `make time` runs all the `longest-seq*` executables with `time`.
+- `make time-sum` runs all the `sum-bytes*` executables with `time`.
+- `make time-length` runs all the `length*` executables with `time`.
+
 ## `length`
 
 Stream bytes and count. Source files `length.c` and `Length.hs`.
