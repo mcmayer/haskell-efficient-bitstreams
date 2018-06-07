@@ -41,4 +41,4 @@ code:
 clean:
 	rm -f bin/* *.prof
 
-.PHONY: hask code time time-sum build-profile profile clean
+.PHONY: install time time-sum time-length profile build-profile code clean
