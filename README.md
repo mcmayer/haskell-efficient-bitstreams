@@ -6,7 +6,7 @@ The `Makefile` has all the various targets to run the experiments and the profil
 
 ## Setup and run
 
-```haskell
+```bash
 mkdir bin	# for C and Haskell executables
 git clone git@github.com:haskell-streaming/streaming.git	# get the newest streaming 
 ```
