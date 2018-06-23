@@ -55,6 +55,10 @@ bitStream' = concat' . smap splitByte' . fromBS
 bits :: ListS Word8 -> ListS Bool
 bits l = ListS (\c z -> build l (\z w -> z `c` testBit w 0 `c` testBit w 1 `c` testBit w 2 `c` testBit w 3 `c` testBit w 4 `c` testBit w 5 `c` testBit w 6 `c` testBit w 7) z)
 
+{-# INLINE bitStream'' #-}
+-- not as fast as bitStream' !
+bitStream'' :: BSL.ByteString -> ListS Bool
+bitStream'' = bits . fromBS
 
 {-# INLINE scanlStep #-}
 scanlStep :: (b -> a -> b) -> (c -> b -> c) -> (b, c) -> a -> (b, c)
