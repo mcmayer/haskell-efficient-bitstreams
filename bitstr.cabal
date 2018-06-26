@@ -44,6 +44,18 @@ executable sum-bytes-stream
     ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
 
+executable sum-bytes-vstream
+    hs-source-dirs:      .
+    main-is:             SumBytesVStream.hs
+    default-language:    Haskell2010
+    build-depends:       base >= 4.7 && < 5
+                       , bytestring
+                       , word8
+                       , mtl
+                       , vector
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
+    ghc-prof-options: -fprof-auto
+
 executable longest-seq
     hs-source-dirs:      .
     main-is:             LongestSeq.hs
@@ -64,6 +76,18 @@ executable longest-seq-stream
                        , streaming
                        , streaming-bytestring
                        , mtl
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
+    ghc-prof-options: -fprof-auto
+
+executable longest-seq-vstream
+    hs-source-dirs:      .
+    main-is:             LongestSeqVStream.hs
+    default-language:    Haskell2010
+    build-depends:       base >= 4.7 && < 5
+                       , bytestring
+                       , word8
+                       , mtl
+                       , vector
     ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
 
