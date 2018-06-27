@@ -26,6 +26,8 @@ mkBitstream bs' = S.Stream step (Step bs' 0 0) where
                                 S.Yield (w .&. 1 == 1) (Step bs (w `shiftR` 1) (n-1))
 
 {-# INLINE_FUSED aggregate #-}
+-- |Aggregate a `Stream m a` into a `Stream m a'` by applying a yield function
+--  `a -> s' -> m (S.Step s' a')` with starting state `s'`.
 aggregate :: Monad m => (a -> s' -> m (S.Step s' a')) -> s' -> S.Stream m a -> S.Stream m a'
 aggregate yld' s0' (S.Stream step0 s0) = S.Stream step' (s0, s0') where
     {-# INLINE_INNER step' #-}
@@ -40,7 +42,6 @@ aggregate yld' s0' (S.Stream step0 s0) = S.Stream step' (s0, s0') where
                     S.Done         -> return S.Done
                     S.Skip s2'     -> return $ S.Skip (s, s2')
                     S.Yield a' s2' -> return $ S.Yield a' (s, s2')
-
 
 {-# INLINE_FUSED mkRuns #-}
 mkRuns :: Monad m => S.Stream m Bool -> S.Stream m Int
