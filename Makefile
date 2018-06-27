@@ -14,6 +14,7 @@ time: all
 	echo "\nlongest-seq-stream:" && time head -c 10000000 </dev/urandom | bin/longest-seq-stream; \
 	echo "\nlongest-seq-vstream:" && time head -c 10000000 </dev/urandom | bin/longest-seq-vstream; \
 	echo "\nlongest-seq-vstream2:" && time head -c 10000000 </dev/urandom | bin/longest-seq-vstream2; \
+	echo "\nlongest-seq-vstream3:" && time head -c 10000000 </dev/urandom | bin/longest-seq-vstream3; \
 	echo "\nlongest-seq-fuse:" && time head -c 10000000 </dev/urandom | bin/longest-seq-fuse; \
 
 time-sum: all
@@ -34,6 +35,7 @@ profile: build-profile
 	head -c 1000000 </dev/urandom | stack exec -- sum-bytes-stream +RTS -p; \
 	head -c 1000000 </dev/urandom | stack exec -- longest-seq-vstream +RTS -p; \
 	head -c 1000000 </dev/urandom | stack exec -- longest-seq-vstream2 +RTS -p; \
+	head -c 10000 </dev/urandom | stack exec -- longest-seq-vstream3 +RTS -p; \
 	head -c 1000000 </dev/urandom | stack exec -- length +RTS -p; \
 
 build-profile:

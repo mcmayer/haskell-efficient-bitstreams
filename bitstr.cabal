@@ -20,7 +20,7 @@ executable length
     build-depends:       base >= 4.7 && < 5
                       , bytestring
                       , word8
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -ddump-asm -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
 
 executable sum-bytes
     hs-source-dirs:      .
@@ -29,7 +29,7 @@ executable sum-bytes
     build-depends:       base >= 4.7 && < 5
                       , bytestring
                       , word8
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -ddump-asm -threaded -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
 
 executable sum-bytes-stream
@@ -41,7 +41,7 @@ executable sum-bytes-stream
                        , word8
                        , streaming
                        , streaming-bytestring
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -ddump-asm -threaded -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
 
 executable sum-bytes-vstream
@@ -53,7 +53,7 @@ executable sum-bytes-vstream
                        , word8
                        , mtl
                        , vector
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -ddump-asm -threaded -optlc-mcpu=native -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
 
 executable longest-seq
@@ -63,7 +63,7 @@ executable longest-seq
     build-depends:       base >= 4.7 && < 5
                        , bytestring
                        , word8
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -ddump-asm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
 
 executable longest-seq-stream
@@ -76,7 +76,7 @@ executable longest-seq-stream
                        , streaming
                        , streaming-bytestring
                        , mtl
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -ddump-asm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
 
 executable longest-seq-vstream
@@ -89,7 +89,7 @@ executable longest-seq-vstream
                        , mtl
                        , vector
                        , transformers
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9 -ddump-simpl
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -ddump-asm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9 -ddump-simpl
     ghc-prof-options: -fprof-auto
 
 executable longest-seq-vstream2
@@ -101,8 +101,20 @@ executable longest-seq-vstream2
                        , word8
                        , mtl
                        , vector
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -ddump-asm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9 -ddump-simpl
+    ghc-prof-options: -fprof-auto
+
+executable longest-seq-vstream3
+    hs-source-dirs:      .
+    main-is:             LongestSeqVStream3.hs
+    default-language:    Haskell2010
+    build-depends:       base >= 4.7 && < 5
+                       , bytestring
+                       , word8
+                       , mtl
+                       , vector
                        , transformers
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9 -ddump-simpl
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -ddump-asm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9 -ddump-simpl
     ghc-prof-options: -fprof-auto
 
 executable longest-seq-fuse
@@ -115,5 +127,5 @@ executable longest-seq-fuse
                        , streaming
                        , streaming-bytestring
                        , mtl
-    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
+    ghc-options: -O2 -fforce-recomp -optc "-funroll-loops" -fasm -ddump-asm -threaded -optlc-mcpu=native -funbox-strict-fields -pgmlo opt-3.9 -pgmlc llc-3.9
     ghc-prof-options: -fprof-auto
