@@ -25,25 +25,46 @@ mkBitstream bs' = S.Stream step (Step bs' 0 0) where
                        | otherwise = return $
                                 S.Yield (w .&. 1 == 1) (Step bs (w `shiftR` 1) (n-1))
 
-data Step2 s = Step2 s !Bool !Int
+{-# INLINE_FUSED aggregate #-}
+aggregate :: Monad m => (a -> s' -> m (S.Step s' a')) -> s' -> S.Stream m a -> S.Stream m a'
+aggregate yld' s0' (S.Stream step0 s0) = S.Stream step' (s0, s0') where
+    {-# INLINE_INNER step' #-}
+    step' (s1, s') = do
+        next <- step0 s1
+        case next of
+            S.Done      -> return S.Done
+            S.Skip s    -> return $ S.Skip (s, s')
+            S.Yield a s -> do
+                next' <- yld' a s'
+                case next' of   -- just wrap everyting into the correct type
+                    S.Done         -> return S.Done
+                    S.Skip s2'     -> return $ S.Skip (s, s2')
+                    S.Yield a' s2' -> return $ S.Yield a' (s, s2')
 
--- convert a Stream of Bool into a Stream of lengths of runs
+
 {-# INLINE_FUSED mkRuns #-}
 mkRuns :: Monad m => S.Stream m Bool -> S.Stream m Int
-mkRuns (S.Stream step s) = S.Stream step' (Step2 s True 1) where
+mkRuns = aggregate yld (True, 1) where
+    yld a (current, count) = return $
+        if a == current
+        then S.Skip (current, count+1)
+        else S.Yield count (not current, 1)
+
+-- convert a Stream of Bool into a Stream of lengths of runs (without using aggregate)
+{-# INLINE_FUSED mkRuns' #-}
+mkRuns' :: Monad m => S.Stream m Bool -> S.Stream m Int
+mkRuns' (S.Stream step s) = S.Stream step' (s, True, 1) where
     {-# INLINE_INNER step' #-}
-    step' (Step2 s' current' count') = do
+    step' (s', current', count') = do
         next <- step s'
         case next of
             S.Done -> return S.Done
-            S.Skip s'' -> return $ S.Skip (Step2 s'' current' count')
+            S.Skip s'' -> return $ S.Skip (s'', current', count')
             S.Yield a s'' -> return $
                 if a == current'
-                then S.Skip (Step2 s'' current' (count'+1))
-                else S.Yield count' (Step2 s'' (not current') 1)
+                then S.Skip (s'', current', count'+1)
+                else S.Yield count' (s'', not current', 1)
 
 main :: IO ()
-main = do
-    bs <- BSL.getContents
-    print $ runIdentity $ S.foldl' max 0 $ mkRuns $ mkBitstream bs
+main = BSL.getContents >>= print . runIdentity . (S.foldl' max 0) . mkRuns . mkBitstream
 
