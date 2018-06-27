@@ -16,24 +16,25 @@ type Stream a = S.Stream Identity a
 
 data Step = Step BSL.ByteString !Word8 !Word8
 
--- {-# INLINE mkBitstream #-}
+{-# INLINE_FUSED mkBitstream #-}
 mkBitstream :: BSL.ByteString -> Stream Bool
 mkBitstream bs' = S.Stream step (Step bs' 0 0) where
     {-# INLINE_INNER step #-}
     step (Step bs w n) | n==0 = case (BSL.uncons bs) of
                             Nothing        -> return S.Done
-                            Just (w', bs') -> return $ S.Yield (w' .&. 1 == 1) (Step bs' (w' `shiftR` 1) 7)
-                       | otherwise = return $ S.Yield (w .&. 1 == 1) (Step bs (w `shiftR` 1) (n-1))
-
+                            Just (w', bs') -> return $
+                                S.Yield (w' .&. 1 == 1) (Step bs' (w' `shiftR` 1) 7)
+                       | otherwise = return $
+                                S.Yield (w .&. 1 == 1) (Step bs (w `shiftR` 1) (n-1))
 
 data LongestRun = LongestRun !Bool !Int !Int
 
-{-# INLINE extendRun #-}
+{-# INLINE_INNER extendRun #-}
 extendRun :: LongestRun -> Bool -> LongestRun
 extendRun (LongestRun previous run longest) x  = LongestRun x current (max current longest)
     where current = if x == previous then run + 1 else 1
 
-{-# INLINE longestRun #-}
+{-# INLINE_INNER longestRun #-}
 longestRun :: Stream Bool -> Int
 longestRun s = runIdentity $ do
     (LongestRun _ _ longest) <- S.foldl' extendRun (LongestRun False 0 0) s

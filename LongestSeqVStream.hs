@@ -12,6 +12,7 @@ import           Data.Word8                        (Word8)
 
 data Step = Step BSL.ByteString !Word8 !Word8
 
+{-# INLINE_FUSED mkBitstream #-}
 mkBitstream :: Monad m => BSL.ByteString -> S.Stream m Bool
 mkBitstream bs' = S.Stream step (Step bs' 0 0) where
     {-# INLINE_INNER step #-}
@@ -24,13 +25,13 @@ mkBitstream bs' = S.Stream step (Step bs' 0 0) where
 
 data LongestRun = LongestRun !Bool !Int !Int
 
-{-# INLINE extendRun #-}
+{-# INLINE_INNER extendRun #-}
 extendRun :: LongestRun -> Bool -> LongestRun
 extendRun (LongestRun previous run longest) x  = LongestRun x current (max current longest)
     where
     current = if x == previous then run + 1 else 1
 
-{-# INLINE longestRun #-}
+{-# INLINE_FUSED longestRun #-}
 longestRun :: S.Stream IO Bool -> IO Int
 longestRun s = do
     (LongestRun _ _ longest) <- S.foldl' extendRun (LongestRun False 0 0) s
