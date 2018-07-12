@@ -1,6 +1,6 @@
 all: bin/longest-seq-c bin/sum-bytes-c bin/length-c install
 
-CC=clang-3.9
+CC=llvm-gcc
 
 install:
 	stack install --local-bin-path bin
