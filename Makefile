@@ -1,4 +1,4 @@
-all: bin/longest-seq-c bin/sum-bytes-c bin/length-c install
+all: bin bin/longest-seq-c bin/sum-bytes-c bin/length-c install
 
 CC=clang-5.0
 
@@ -47,5 +47,8 @@ code:
 
 clean:
 	rm -f bin/* *.prof
+
+bin:
+	mkdir -p bin
 
 .PHONY: install time time-sum time-length profile build-profile code clean
