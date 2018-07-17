@@ -20,8 +20,8 @@ mkBitstream bs' = S.Stream step (Step bs' 0 0) where
     {-# INLINE_INNER step #-}
     step (Step bs w n) | n==0 = case (BSL.uncons bs) of
                             Nothing        -> return S.Done
-                            Just (w', bs') -> return $
-                                S.Yield (w' .&. 1 == 1) (Step bs' (w' `shiftR` 1) 7)
+                            Just (w', bs'') -> return $
+                                S.Yield (w' .&. 1 == 1) (Step bs'' (w' `shiftR` 1) 7)
                        | otherwise = return $
                                 S.Yield (w .&. 1 == 1) (Step bs (w `shiftR` 1) (n-1))
 
