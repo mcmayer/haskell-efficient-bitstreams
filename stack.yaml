@@ -41,7 +41,9 @@ packages:
 # Dependency packages to be pulled from upstream that are not in the resolver
 # (e.g., acme-missiles-0.3)
 extra-deps:
-  - streaming
+  - git: https://github.com/janpath/intero.git
+    commit: c32d87a170495d106744c3f7275a9d24ed0e3e42
+
 
 allow-newer: true
 
